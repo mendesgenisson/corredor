@@ -37,8 +37,14 @@ export function AthleteDetailModal({
     const totalSeconds = parseTimeString(testTime5k);
     if (totalSeconds) {
       const newZones = calculatePaceZonesFrom5k(totalSeconds);
+      const formattedTime = formatMinutesSeconds(totalSeconds);
       setZones(newZones);
-      setTestTime5k(formatMinutesSeconds(totalSeconds));
+      setTestTime5k(formattedTime);
+      onUpdatePaceZones(athlete.id, newZones, formattedTime);
+      setSavedSuccess(true);
+      setTimeout(() => {
+        setSavedSuccess(false);
+      }, 2500);
     }
   };
 

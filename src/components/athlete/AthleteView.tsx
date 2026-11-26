@@ -135,7 +135,7 @@ export function AthleteView({ athlete, workouts, onUpdateWorkout }: AthleteViewP
 
   return (
     <div className="mx-auto w-full max-w-md pb-24 px-4 pt-3 space-y-4">
-      {/* Card do Atleta & Prova Alvo */}
+      {/* Card do Atleta e Prova Alvo */}
       <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-5 shadow-xl">
         <div className="flex items-center gap-3.5">
           <img
@@ -153,7 +153,7 @@ export function AthleteView({ athlete, workouts, onUpdateWorkout }: AthleteViewP
           </div>
         </div>
 
-        {/* Metas & Resumo Rápido */}
+        {/* Metas e Resumo Rápido */}
         <div className="mt-4 grid grid-cols-3 gap-2 border-t border-slate-800/80 pt-3">
           <div className="rounded-xl bg-slate-950/60 p-2.5 text-center border border-slate-800/50">
             <span className="text-[10px] uppercase font-bold text-slate-400">Objetivo</span>

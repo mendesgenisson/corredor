@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { UserRole, AthleteProfile, Workout, PaceZones } from '@/types';
 import { MOCK_ATHLETES, MOCK_WORKOUTS } from '@/lib/mockData';
+import { syncWorkoutTextWithZones } from '@/lib/vdot';
 import { AthleteView } from '@/components/athlete/AthleteView';
 import { CoachView } from '@/components/coach/CoachView';
 import { Flame, Smartphone, Laptop, Users } from 'lucide-react';
@@ -109,35 +110,17 @@ export default function Home() {
       if (new5kTime) targetMock.personalRecords['5k'] = new5kTime;
     }
 
-    // 2. Atualiza a descrição dos treinos do atleta para sincronizar os ritmos
+    // 2. Atualiza todos os blocos (aquecimento, principal e desaquecimento) dos treinos da semana do atleta
     setWorkouts((prev) => {
       const updated = prev.map((w) => {
         if (w.athleteId !== athleteId) return w;
-        let updatedMain = w.blocks.main;
-
-        if (w.type === 'intervalado') {
-          // Atualiza referências ao ritmo Z5
-          updatedMain = updatedMain.replace(
-            /(em ritmo Z5 \([^)]+\)|forte, aprox\.[^,)]+|alvo Z5:\s*[\d:]+\s*-\s*[\d:]+\s*\/km)/gi,
-            `em ritmo Z5 (alvo: ${zones.z5_interval})`
-          );
-        } else if (w.type === 'tempo_run') {
-          updatedMain = updatedMain.replace(
-            /Z4:\s*(?:aprox\.[^)]+|[\d:]+\s*a\s*[\d:]+\/km|[\d:]+\s*-\s*[\d:]+\s*\/km)/gi,
-            `Z4: ${zones.z4_threshold}`
-          );
-        } else if (w.type === 'regenerativo') {
-          updatedMain = updatedMain.replace(
-            /Zona 2 \([^)]+\)/gi,
-            `Zona 1/2 (${zones.z1_recovery})`
-          );
-        }
 
         return {
           ...w,
           blocks: {
-            ...w.blocks,
-            main: updatedMain,
+            warmup: syncWorkoutTextWithZones(w.blocks.warmup, zones),
+            main: syncWorkoutTextWithZones(w.blocks.main, zones),
+            cooldown: syncWorkoutTextWithZones(w.blocks.cooldown, zones),
           },
         };
       });
@@ -242,7 +225,7 @@ export default function Home() {
 
       {/* Footer discreto */}
       <footer className="border-t border-slate-900 py-4 text-center text-xs text-slate-500">
-        PaceRun © 2026 • Plataforma de Corrida & PWA Instalável
+        PaceRun © 2026 • Plataforma de Corrida e PWA Instalável
       </footer>
     </div>
   );

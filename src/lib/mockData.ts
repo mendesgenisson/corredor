@@ -70,7 +70,7 @@ export const MOCK_WORKOUTS: Workout[] = [
     id: 'w-2',
     athleteId: 'ath-1',
     scheduledDate: '2026-11-24', // Terça
-    title: 'Fortalecimento & Mobilidade',
+    title: 'Fortalecimento e Mobilidade',
     type: 'forca',
     estimatedDistanceKm: 0,
     blocks: {
@@ -144,7 +144,7 @@ export const MOCK_WORKOUTS: Workout[] = [
     id: 'w-7',
     athleteId: 'ath-1',
     scheduledDate: '2026-11-29', // Domingo
-    title: 'Descanso & Liberação Miofascial',
+    title: 'Descanso e Liberação Miofascial',
     type: 'descanso',
     estimatedDistanceKm: 0,
     blocks: {

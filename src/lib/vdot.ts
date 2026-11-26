@@ -86,3 +86,35 @@ export function calculatePaceZonesFrom5k(time5kSeconds: number): PaceZones {
     z5_interval: `${formatPace(pace5k * 0.95)} - ${formatPace(pace5k * 1.01)}`,
   };
 }
+
+/**
+ * Sincroniza referências de zonas (Z1-Z5 / Zona 1-5) em textos de treino com os ritmos atuais.
+ */
+export function syncWorkoutTextWithZones(text: string, zones: PaceZones): string {
+  if (!text) return text;
+
+  const zoneMap: Record<string, string> = {
+    '1': zones.z1_recovery,
+    '2': zones.z2_aerobic,
+    '3': zones.z3_tempo,
+    '4': zones.z4_threshold,
+    '5': zones.z5_interval,
+  };
+
+  // Normaliza formatos legados dos mocks antes da substituição idempotente
+  let result = text
+    .replace(/\(forte,\s*aprox\.[^)]+\)/gi, `(${zones.z5_interval})`)
+    .replace(/Z4:\s*aprox\.[^)]+/gi, `Z4 (${zones.z4_threshold})`);
+
+  const zoneRegex =
+    /\b(Zona\s*([1-5])|Z([1-5]))(?:\s*\((?:alvo:\s*)?[\d:]+\s*(?:\/km)?\s*(?:-|a)\s*[\d:]+\s*\/km\))?(?:\s*:\s*[\d:]+\s*(?:\/km)?\s*(?:-|a)\s*[\d:]+\s*\/km)?/gi;
+
+  result = result.replace(zoneRegex, (_match, label: string, zNumA?: string, zNumB?: string) => {
+    const zNum = zNumA || zNumB;
+    const pace = zNum ? zoneMap[zNum] : undefined;
+    if (!pace) return label;
+    return `${label} (${pace})`;
+  });
+
+  return result;
+}
