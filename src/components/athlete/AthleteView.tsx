@@ -7,7 +7,6 @@ import {
   Calendar, 
   CheckCircle2, 
   Trophy, 
-  Activity, 
   ChevronRight, 
   Zap, 
   Wind, 
@@ -24,11 +23,10 @@ interface AthleteViewProps {
 }
 
 export function AthleteView({ athlete, workouts, onUpdateWorkout }: AthleteViewProps) {
-  const [selectedDate, setSelectedDate] = useState<string>('2026-11-23'); // Hoje
+  const [selectedDate, setSelectedDate] = useState<string>('2026-11-23');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showZones, setShowZones] = useState(false);
 
-  // Mapeamento dos dias da semana atual
   const weekDays = [
     { label: 'Seg', date: '2026-11-23', dayNum: '23' },
     { label: 'Ter', date: '2026-11-24', dayNum: '24' },
@@ -45,47 +43,42 @@ export function AthleteView({ athlete, workouts, onUpdateWorkout }: AthleteViewP
     switch (type) {
       case 'intervalado':
         return {
-          label: 'Ritmo Alvo (Zona 5 - Tiros / VO2max)',
+          label: 'Ritmo Alvo • Zona 5 (Tiros / VO2max)',
           pace: athlete.paceZones.z5_interval,
-          color: 'text-rose-400',
-          borderColor: 'border-rose-500/30',
-          bgColor: 'bg-rose-950/20',
+          accent: 'text-[#FC4C02]',
+          bgColor: 'bg-[#FFF2EC] border-[#FC4C02]/25',
           desc: 'Tiros fortes e consistentes',
         };
       case 'tempo_run':
         return {
-          label: 'Ritmo Alvo (Zona 4 - Limiar de Lactato)',
+          label: 'Ritmo Alvo • Zona 4 (Limiar de Lactato)',
           pace: athlete.paceZones.z4_threshold,
-          color: 'text-amber-400',
-          borderColor: 'border-amber-500/30',
-          bgColor: 'bg-amber-950/20',
+          accent: 'text-[#D95D00]',
+          bgColor: 'bg-amber-50 border-amber-200',
           desc: 'Esforço desconfortavelmente sustentável',
         };
       case 'longao':
         return {
-          label: 'Ritmo Alvo (Zona 2 - Aeróbico Contínuo)',
+          label: 'Ritmo Alvo • Zona 2 (Aeróbico Contínuo)',
           pace: athlete.paceZones.z2_aerobic,
-          color: 'text-orange-400',
-          borderColor: 'border-orange-500/30',
-          bgColor: 'bg-orange-950/20',
+          accent: 'text-[#FC4C02]',
+          bgColor: 'bg-[#FFF2EC] border-[#FC4C02]/25',
           desc: 'Constância e resistência aeróbica',
         };
       case 'rodagem':
         return {
-          label: 'Ritmo Alvo (Zona 2 - Rodagem Aeróbica)',
+          label: 'Ritmo Alvo • Zona 2 (Rodagem Aeróbica)',
           pace: athlete.paceZones.z2_aerobic,
-          color: 'text-blue-400',
-          borderColor: 'border-blue-500/30',
-          bgColor: 'bg-blue-950/20',
+          accent: 'text-sky-700',
+          bgColor: 'bg-sky-50 border-sky-200',
           desc: 'Ritmo confortável de conversa',
         };
       case 'regenerativo':
         return {
-          label: 'Ritmo Alvo (Zona 1 - Regenerativo Leve)',
+          label: 'Ritmo Alvo • Zona 1 (Regenerativo Leve)',
           pace: athlete.paceZones.z1_recovery,
-          color: 'text-emerald-400',
-          borderColor: 'border-emerald-500/30',
-          bgColor: 'bg-emerald-950/20',
+          accent: 'text-emerald-700',
+          bgColor: 'bg-emerald-50 border-emerald-200',
           desc: 'Trote muito leve para soltura',
         };
       default:
@@ -117,110 +110,117 @@ export function AthleteView({ athlete, workouts, onUpdateWorkout }: AthleteViewP
   const getWorkoutBadge = (type: string) => {
     switch (type) {
       case 'intervalado':
-        return { label: 'Tiros / Intervalado', bg: 'bg-rose-500/20 text-rose-400 border-rose-500/30' };
+        return { label: 'Tiros / Intervalado', bg: 'bg-[#FFF2EC] text-[#FC4C02] border-[#FC4C02]/30' };
       case 'longao':
-        return { label: 'Longão de Fim de Semana', bg: 'bg-amber-500/20 text-amber-400 border-amber-500/30' };
+        return { label: 'Longão de Fim de Semana', bg: 'bg-amber-50 text-amber-700 border-amber-200' };
       case 'tempo_run':
-        return { label: 'Ritmo / Tempo Run', bg: 'bg-orange-500/20 text-orange-400 border-orange-500/30' };
+        return { label: 'Ritmo / Tempo Run', bg: 'bg-orange-50 text-orange-700 border-orange-200' };
       case 'rodagem':
-        return { label: 'Rodagem Aeróbica', bg: 'bg-blue-500/20 text-blue-400 border-blue-500/30' };
+        return { label: 'Rodagem Aeróbica', bg: 'bg-sky-50 text-sky-700 border-sky-200' };
       case 'regenerativo':
-        return { label: 'Regenerativo Leve', bg: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' };
+        return { label: 'Regenerativo Leve', bg: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
       case 'forca':
-        return { label: 'Fortalecimento / Funcional', bg: 'bg-purple-500/20 text-purple-400 border-purple-500/30' };
+        return { label: 'Fortalecimento / Funcional', bg: 'bg-purple-50 text-purple-700 border-purple-200' };
       default:
-        return { label: 'Descanso', bg: 'bg-slate-700/30 text-slate-400 border-slate-700' };
+        return { label: 'Descanso', bg: 'bg-slate-100 text-[#6D6D78] border-[#E5E5EA]' };
     }
   };
 
   return (
-    <div className="mx-auto w-full max-w-md pb-24 px-4 pt-3 space-y-4">
-      {/* Card do Atleta e Prova Alvo */}
-      <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-5 shadow-xl">
+    <div className="mx-auto w-full max-w-md pb-24 px-4 pt-4 space-y-4">
+      {/* Card de Perfil do Atleta - Estilo Strava */}
+      <div className="rounded-xl border border-[#E5E5EA] bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
         <div className="flex items-center gap-3.5">
           <img
             src={athlete.avatarUrl}
             alt={athlete.name}
-            className="h-14 w-14 rounded-2xl object-cover ring-2 ring-orange-500/40 shadow-md"
+            className="h-14 w-14 rounded-full object-cover ring-2 ring-[#FC4C02]/30"
           />
           <div className="flex-1 min-w-0">
-            <span className="text-[11px] font-semibold text-orange-400 uppercase tracking-wider">Atleta PaceRun</span>
-            <h2 className="text-lg font-bold text-white truncate">{athlete.name}</h2>
-            <div className="flex items-center gap-1.5 text-xs text-slate-300 mt-0.5">
-              <Trophy className="h-3.5 w-3.5 text-amber-400 shrink-0" />
-              <span className="truncate">{athlete.targetRace}</span>
+            <div className="flex items-center justify-between gap-1">
+              <span className="text-[11px] font-bold text-[#FC4C02] uppercase tracking-wider">Atleta PaceRun</span>
+              {athlete.initialWeightKg !== undefined && (
+                <span className="text-[11px] font-semibold text-[#6D6D78] bg-[#F7F7FA] border border-[#E5E5EA] px-2 py-0.5 rounded-full">
+                  {athlete.initialWeightKg} kg
+                </span>
+              )}
+            </div>
+            <h2 className="text-lg font-extrabold text-[#242428] truncate">{athlete.name}</h2>
+            <div className="flex items-center gap-1.5 text-xs text-[#6D6D78] mt-0.5">
+              <Trophy className="h-3.5 w-3.5 text-[#FC4C02] shrink-0" />
+              <span className="truncate font-medium">{athlete.targetRace}</span>
             </div>
           </div>
         </div>
 
-        {/* Metas e Resumo Rápido */}
-        <div className="mt-4 grid grid-cols-3 gap-2 border-t border-slate-800/80 pt-3">
-          <div className="rounded-xl bg-slate-950/60 p-2.5 text-center border border-slate-800/50">
-            <span className="text-[10px] uppercase font-bold text-slate-400">Objetivo</span>
-            <p className="text-xs font-bold text-white mt-0.5 truncate">{athlete.targetDistance}</p>
+        {/* Faixa de Métricas Horizontais Strava */}
+        <div className="mt-4 grid grid-cols-3 divide-x divide-[#E5E5EA] border-t border-[#E5E5EA] pt-3.5">
+          <div className="pr-2 text-center">
+            <span className="text-[10px] uppercase font-semibold text-[#6D6D78] block">Objetivo</span>
+            <p className="text-xs font-bold text-[#242428] mt-0.5 truncate">{athlete.targetDistance}</p>
           </div>
-          <div className="rounded-xl bg-slate-950/60 p-2.5 text-center border border-slate-800/50">
-            <span className="text-[10px] uppercase font-bold text-slate-400">Km na Semana</span>
-            <p className="text-xs font-bold text-orange-400 mt-0.5">{totalKm.toFixed(1)} km</p>
+          <div className="px-2 text-center">
+            <span className="text-[10px] uppercase font-semibold text-[#6D6D78] block">Km na Semana</span>
+            <p className="text-sm font-black text-[#242428] tabular-nums mt-0.5">{totalKm.toFixed(1)} km</p>
           </div>
-          <div className="rounded-xl bg-slate-950/60 p-2.5 text-center border border-slate-800/50">
-            <span className="text-[10px] uppercase font-bold text-slate-400">VDOT Base</span>
-            <p className="text-xs font-bold text-emerald-400 mt-0.5">{athlete.paceZones.vdot}</p>
+          <div className="pl-2 text-center">
+            <span className="text-[10px] uppercase font-semibold text-[#6D6D78] block">VDOT Base</span>
+            <p className="text-sm font-black text-[#FC4C02] tabular-nums mt-0.5">{athlete.paceZones.vdot}</p>
           </div>
         </div>
 
         {/* Botão de Zonas de Pace */}
         <button
           onClick={() => setShowZones(!showZones)}
-          className="mt-3 w-full flex items-center justify-between rounded-xl bg-slate-800/50 hover:bg-slate-800 px-3 py-2 text-xs text-slate-300 transition-colors"
+          className="mt-3.5 w-full flex items-center justify-between rounded-lg bg-[#F7F7FA] hover:bg-slate-100 border border-[#E5E5EA] px-3 py-2 text-xs font-semibold text-[#242428] transition-colors"
         >
           <span className="flex items-center gap-1.5">
-            <Flame className="h-3.5 w-3.5 text-orange-400" />
+            <Flame className="h-3.5 w-3.5 text-[#FC4C02]" />
             Minhas Zonas de Ritmo (Pace)
           </span>
-          <ChevronRight className={`h-4 w-4 transition-transform ${showZones ? 'rotate-90' : ''}`} />
+          <ChevronRight className={`h-4 w-4 text-[#6D6D78] transition-transform ${showZones ? 'rotate-90' : ''}`} />
         </button>
 
         {/* Tabela expansível de Zonas */}
         {showZones && (
-          <div className="mt-2.5 space-y-1.5 rounded-2xl bg-slate-950/80 p-3 text-xs border border-slate-800">
-            <div className="flex justify-between items-center text-slate-400 pb-1 border-b border-slate-800 text-[10px] uppercase font-semibold">
-              <span>Zona de Treino (Teste 5k: {athlete.personalRecords['5k'] || '--:--'})</span>
+          <div className="mt-2.5 space-y-1.5 rounded-lg bg-[#F7F7FA] p-3 text-xs border border-[#E5E5EA]">
+            <div className="flex justify-between items-center text-[#6D6D78] pb-1.5 border-b border-[#E5E5EA] text-[10px] uppercase font-bold">
+              <span>Zona de Treino (5k: {athlete.personalRecords['5k'] || '--:--'})</span>
               <span>Ritmo Alvo</span>
             </div>
             <div className="flex justify-between py-1">
-              <span className="text-emerald-400 font-medium">Z1 - Regenerativo</span>
-              <span className="text-slate-200 font-mono">{athlete.paceZones.z1_recovery}</span>
+              <span className="text-emerald-700 font-semibold">Z1 - Regenerativo</span>
+              <span className="text-[#242428] font-mono font-semibold">{athlete.paceZones.z1_recovery}</span>
             </div>
             <div className="flex justify-between py-1">
-              <span className="text-blue-400 font-medium">Z2 - Rodagem Aeróbica</span>
-              <span className="text-slate-200 font-mono">{athlete.paceZones.z2_aerobic}</span>
+              <span className="text-sky-700 font-semibold">Z2 - Rodagem Aeróbica</span>
+              <span className="text-[#242428] font-mono font-semibold">{athlete.paceZones.z2_aerobic}</span>
             </div>
             <div className="flex justify-between py-1">
-              <span className="text-orange-400 font-medium">Z3 - Ritmo Prova (Tempo)</span>
-              <span className="text-slate-200 font-mono">{athlete.paceZones.z3_tempo}</span>
+              <span className="text-amber-700 font-semibold">Z3 - Ritmo Prova (Tempo)</span>
+              <span className="text-[#242428] font-mono font-semibold">{athlete.paceZones.z3_tempo}</span>
             </div>
             <div className="flex justify-between py-1">
-              <span className="text-amber-400 font-medium">Z4 - Limiar de Lactato</span>
-              <span className="text-slate-200 font-mono">{athlete.paceZones.z4_threshold}</span>
+              <span className="text-orange-600 font-semibold">Z4 - Limiar de Lactato</span>
+              <span className="text-[#242428] font-mono font-semibold">{athlete.paceZones.z4_threshold}</span>
             </div>
             <div className="flex justify-between py-1">
-              <span className="text-rose-400 font-medium">Z5 - Tiros / VO2max</span>
-              <span className="text-slate-200 font-mono">{athlete.paceZones.z5_interval}</span>
+              <span className="text-[#FC4C02] font-bold">Z5 - Tiros / VO2max</span>
+              <span className="text-[#242428] font-mono font-bold">{athlete.paceZones.z5_interval}</span>
             </div>
           </div>
         )}
       </div>
 
-      {/* Calendário Semanal (Ribbon) */}
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-3 shadow-lg">
-        <div className="flex items-center justify-between px-1 mb-2">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-300">
-            <Calendar className="h-3.5 w-3.5 text-orange-400" />
+      {/* Calendário Semanal */}
+      <div className="rounded-xl border border-[#E5E5EA] bg-white p-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        <div className="flex items-center justify-between px-1 mb-2.5">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[#242428]">
+            <Calendar className="h-3.5 w-3.5 text-[#FC4C02]" />
             Semana Atual (23 a 29 Nov)
           </div>
-          <span className="text-[11px] text-slate-400">
-            {completedCount}/7 feitos
+          <span className="text-[11px] font-semibold text-[#6D6D78]">
+            {completedCount}/7 concluídos
           </span>
         </div>
 
@@ -235,21 +235,23 @@ export function AthleteView({ athlete, workouts, onUpdateWorkout }: AthleteViewP
               <button
                 key={d.date}
                 onClick={() => setSelectedDate(d.date)}
-                className={`flex flex-col items-center justify-center py-2 rounded-xl transition-all ${
+                className={`flex flex-col items-center justify-center py-2 rounded-lg transition-all ${
                   isSelected
-                    ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-500/30 scale-105 ring-1 ring-orange-300'
-                    : 'bg-slate-950/60 text-slate-300 hover:bg-slate-800 border border-slate-800/60'
+                    ? 'bg-[#FC4C02] text-white font-bold shadow-sm'
+                    : 'bg-[#F7F7FA] text-[#242428] hover:bg-slate-200/70 border border-[#E5E5EA]'
                 }`}
               >
-                <span className="text-[10px] uppercase font-semibold">{d.label}</span>
-                <span className="text-xs font-extrabold mt-0.5">{d.dayNum}</span>
+                <span className={`text-[10px] uppercase font-semibold ${isSelected ? 'text-white/90' : 'text-[#6D6D78]'}`}>
+                  {d.label}
+                </span>
+                <span className="text-xs font-extrabold mt-0.5 tabular-nums">{d.dayNum}</span>
                 <div className="mt-1 h-1.5 w-1.5 rounded-full">
                   {isCompleted ? (
-                    <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                    <div className={`h-1.5 w-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-emerald-500'}`} />
                   ) : isRest ? (
-                    <div className="h-1.5 w-1.5 rounded-full bg-slate-600" />
+                    <div className={`h-1.5 w-1.5 rounded-full ${isSelected ? 'bg-white/50' : 'bg-slate-300'}`} />
                   ) : (
-                    <div className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+                    <div className={`h-1.5 w-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-[#FC4C02]'}`} />
                   )}
                 </div>
               </button>
@@ -258,97 +260,93 @@ export function AthleteView({ athlete, workouts, onUpdateWorkout }: AthleteViewP
         </div>
       </div>
 
-      {/* Detalhamento do Treino Selecionado */}
+      {/* Card de Treino do Dia (Estilo Activity Card do Strava) */}
       {currentWorkout ? (
-        <div className="rounded-3xl border border-slate-800 bg-slate-900 p-5 shadow-xl space-y-4">
-          {/* Header do treino */}
+        <div className="rounded-xl border border-[#E5E5EA] bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-4">
           <div className="flex items-start justify-between gap-3">
             <div>
               <span
-                className={`inline-block rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                className={`inline-block rounded-md border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                   getWorkoutBadge(currentWorkout.type).bg
                 }`}
               >
                 {getWorkoutBadge(currentWorkout.type).label}
               </span>
-              <h3 className="text-lg font-bold text-white mt-1.5">{currentWorkout.title}</h3>
+              <h3 className="text-lg font-extrabold text-[#242428] mt-1.5 leading-snug">{currentWorkout.title}</h3>
               {currentWorkout.estimatedDistanceKm > 0 && (
-                <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
-                  <Footprints className="h-3.5 w-3.5 text-orange-400" />
-                  Distância Estimada: ~{currentWorkout.estimatedDistanceKm} km
+                <p className="text-xs text-[#6D6D78] flex items-center gap-1 mt-1 font-medium">
+                  <Footprints className="h-3.5 w-3.5 text-[#FC4C02]" />
+                  Distância Estimada: <strong className="text-[#242428]">~{currentWorkout.estimatedDistanceKm} km</strong>
                 </p>
               )}
             </div>
 
             {currentWorkout.status === 'completed' && (
-              <span className="flex items-center gap-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 px-2.5 py-1 text-[11px] font-bold text-emerald-400">
+              <span className="flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-[11px] font-bold text-emerald-700 shrink-0">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 Concluído
               </span>
             )}
           </div>
 
-          {/* Ritmo Alvo Dinâmico Baseado no VDOT/Zonas do Aluno */}
+          {/* Ritmo Alvo Dinâmico */}
           {targetPace && currentWorkout.type !== 'descanso' && currentWorkout.type !== 'forca' && (
-            <div className={`flex items-center justify-between rounded-2xl border p-3.5 shadow-sm ${targetPace.borderColor} ${targetPace.bgColor}`}>
+            <div className={`flex items-center justify-between rounded-lg border p-3.5 ${targetPace.bgColor}`}>
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 border border-slate-800 shadow">
-                  <Flame className={`h-5 w-5 ${targetPace.color}`} />
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white border border-[#E5E5EA] shadow-xs">
+                  <Flame className={`h-5 w-5 ${targetPace.accent}`} />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#6D6D78] block">
                     {targetPace.label}
                   </span>
-                  <span className={`text-base font-black font-mono tracking-tight ${targetPace.color}`}>
+                  <span className={`text-base font-black font-mono tracking-tight ${targetPace.accent}`}>
                     {targetPace.pace}
                   </span>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-[10px] text-slate-300 bg-slate-900/90 px-2.5 py-1 rounded-xl border border-slate-800 font-bold block">
+                <span className="text-[10px] text-[#242428] bg-white px-2.5 py-1 rounded-md border border-[#E5E5EA] font-bold block tabular-nums">
                   VDOT {athlete.paceZones.vdot}
                 </span>
-                <span className="text-[9px] text-slate-400 mt-0.5 block">{targetPace.desc}</span>
+                <span className="text-[9px] text-[#6D6D78] mt-0.5 block">{targetPace.desc}</span>
               </div>
             </div>
           )}
 
           {/* Blocos do Treino */}
           <div className="space-y-2.5 pt-1">
-            {/* Aquecimento */}
             {currentWorkout.blocks.warmup && (
-              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/50 p-3.5">
-                <div className="flex items-center gap-2 text-xs font-bold text-amber-400 mb-1">
-                  <Flame className="h-4 w-4" />
+              <div className="rounded-lg border border-[#E5E5EA] bg-[#F7F7FA] p-3.5">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#242428] mb-1">
+                  <Flame className="h-4 w-4 text-amber-500" />
                   1. Aquecimento
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-[#6D6D78] leading-relaxed">
                   {currentWorkout.blocks.warmup}
                 </p>
               </div>
             )}
 
-            {/* Principal */}
             {currentWorkout.blocks.main && (
-              <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-950/20 via-slate-950/70 to-slate-950/50 p-4 shadow-sm">
-                <div className="flex items-center gap-2 text-xs font-extrabold text-orange-400 mb-1.5">
-                  <Zap className="h-4 w-4 text-orange-500" />
+              <div className="rounded-lg border border-[#FC4C02]/30 border-l-4 border-l-[#FC4C02] bg-[#FFF8F5] p-4">
+                <div className="flex items-center gap-2 text-xs font-extrabold text-[#FC4C02] mb-1.5">
+                  <Zap className="h-4 w-4 text-[#FC4C02]" />
                   2. Treino Principal
                 </div>
-                <p className="text-xs font-medium text-slate-100 leading-relaxed whitespace-pre-line">
+                <p className="text-xs font-semibold text-[#242428] leading-relaxed whitespace-pre-line">
                   {currentWorkout.blocks.main}
                 </p>
               </div>
             )}
 
-            {/* Desaquecimento */}
             {currentWorkout.blocks.cooldown && (
-              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/50 p-3.5">
-                <div className="flex items-center gap-2 text-xs font-bold text-teal-400 mb-1">
-                  <Wind className="h-4 w-4" />
+              <div className="rounded-lg border border-[#E5E5EA] bg-[#F7F7FA] p-3.5">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#242428] mb-1">
+                  <Wind className="h-4 w-4 text-sky-600" />
                   3. Volta à Calma / Desaquecimento
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-[#6D6D78] leading-relaxed">
                   {currentWorkout.blocks.cooldown}
                 </p>
               </div>
@@ -357,57 +355,57 @@ export function AthleteView({ athlete, workouts, onUpdateWorkout }: AthleteViewP
 
           {/* Observações do Treinador */}
           {currentWorkout.coachNotes && (
-            <div className="flex items-start gap-2.5 rounded-2xl bg-slate-800/40 border border-slate-700/50 p-3.5 text-xs text-slate-300">
-              <Info className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2.5 rounded-lg bg-[#F7F7FA] border border-[#E5E5EA] p-3.5 text-xs text-[#6D6D78]">
+              <Info className="h-4 w-4 text-[#FC4C02] shrink-0 mt-0.5" />
               <div>
-                <strong className="text-white block mb-0.5">Dica do Treinador:</strong>
+                <strong className="text-[#242428] block mb-0.5">Dica do Treinador:</strong>
                 {currentWorkout.coachNotes}
               </div>
             </div>
           )}
 
-          {/* Dados do Treino Executado (se já preenchido) */}
+          {/* Dados do Treino Executado */}
           {currentWorkout.log && (
-            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/15 p-4 space-y-2">
-              <span className="text-[10px] uppercase font-bold text-emerald-400">Resultado Registrado</span>
-              <div className="grid grid-cols-3 gap-2 pt-1 text-center">
-                <div className="bg-slate-900/80 p-2 rounded-xl">
-                  <span className="text-[10px] text-slate-400 block">Distância</span>
-                  <span className="text-xs font-bold text-white">{currentWorkout.log.distanceKm} km</span>
+            <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-4 space-y-2.5">
+              <span className="text-[10px] uppercase font-bold text-emerald-700 tracking-wider">Resultado Registrado</span>
+              <div className="grid grid-cols-3 divide-x divide-emerald-200 bg-white rounded-lg border border-emerald-200 p-2.5 text-center">
+                <div>
+                  <span className="text-[10px] text-[#6D6D78] block">Distância</span>
+                  <span className="text-xs font-black text-[#242428] tabular-nums">{currentWorkout.log.distanceKm} km</span>
                 </div>
-                <div className="bg-slate-900/80 p-2 rounded-xl">
-                  <span className="text-[10px] text-slate-400 block">Pace Médio</span>
-                  <span className="text-xs font-bold text-orange-400">{currentWorkout.log.avgPace}</span>
+                <div>
+                  <span className="text-[10px] text-[#6D6D78] block">Pace Médio</span>
+                  <span className="text-xs font-black text-[#FC4C02] tabular-nums">{currentWorkout.log.avgPace}</span>
                 </div>
-                <div className="bg-slate-900/80 p-2 rounded-xl">
-                  <span className="text-[10px] text-slate-400 block">Esforço RPE</span>
-                  <span className="text-xs font-bold text-amber-400">{currentWorkout.log.rpeEffort}/10</span>
+                <div>
+                  <span className="text-[10px] text-[#6D6D78] block">Esforço RPE</span>
+                  <span className="text-xs font-black text-[#242428] tabular-nums">{currentWorkout.log.rpeEffort}/10</span>
                 </div>
               </div>
 
               {currentWorkout.log.painLevel !== 'none' && (
-                <div className="flex items-center gap-1.5 text-xs text-rose-300 bg-rose-950/40 p-2 rounded-xl">
-                  <ShieldAlert className="h-4 w-4 text-rose-400" />
+                <div className="flex items-center gap-1.5 text-xs text-rose-700 bg-rose-50 border border-rose-200 p-2.5 rounded-lg">
+                  <ShieldAlert className="h-4 w-4 text-rose-600 shrink-0" />
                   <span>Dor relatada ({currentWorkout.log.painLevel}): {currentWorkout.log.painLocation}</span>
                 </div>
               )}
 
               {currentWorkout.log.athleteFeedback && (
-                <p className="text-xs text-slate-300 italic pt-1">
+                <p className="text-xs text-[#242428] italic pt-0.5">
                   "{currentWorkout.log.athleteFeedback}"
                 </p>
               )}
             </div>
           )}
 
-          {/* Botão de Conclusão / Edição */}
+          {/* Botão CTA Strava */}
           {currentWorkout.type !== 'descanso' && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className={`w-full flex items-center justify-center gap-2 rounded-2xl py-3.5 text-xs font-bold shadow-lg transition-all ${
+              className={`w-full flex items-center justify-center gap-2 rounded-lg py-3 text-xs font-bold transition-all active:scale-[0.99] ${
                 currentWorkout.status === 'completed'
-                  ? 'border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700'
-                  : 'bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white shadow-orange-500/25 hover:from-orange-600 hover:to-amber-600 active:scale-[0.99]'
+                  ? 'border border-[#E5E5EA] bg-[#F7F7FA] text-[#242428] hover:bg-slate-200/70'
+                  : 'bg-[#FC4C02] hover:bg-[#E34402] text-white shadow-sm'
               }`}
             >
               <CheckCircle2 className="h-4 w-4" />
@@ -416,13 +414,12 @@ export function AthleteView({ athlete, workouts, onUpdateWorkout }: AthleteViewP
           )}
         </div>
       ) : (
-        <div className="rounded-3xl border border-slate-800 bg-slate-900/50 p-8 text-center text-slate-400">
-          <Calendar className="mx-auto h-8 w-8 text-slate-600 mb-2" />
+        <div className="rounded-xl border border-[#E5E5EA] bg-white p-8 text-center text-[#6D6D78]">
+          <Calendar className="mx-auto h-8 w-8 text-slate-300 mb-2" />
           <p className="text-xs font-medium">Nenhum treino prescrito para este dia.</p>
         </div>
       )}
 
-      {/* Modal de Feedback */}
       {isModalOpen && currentWorkout && (
         <WorkoutFeedbackModal
           workout={currentWorkout}

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "PaceRun",
   },
   icons: {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B0F19",
+  themeColor: "#FC4C02",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -44,9 +44,9 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-950 text-slate-100 font-sans selection:bg-orange-500 selection:text-white">
+      <body className="min-h-full flex flex-col bg-[#F7F7FA] text-[#242428] font-sans selection:bg-[#FC4C02] selection:text-white">
         <div className="flex-1 flex flex-col">
           {children}
         </div>

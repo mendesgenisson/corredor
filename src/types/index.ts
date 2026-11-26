@@ -24,6 +24,7 @@ export interface AthleteProfile {
   email: string;
   phone: string;
   avatarUrl: string;
+  initialWeightKg?: number;
   targetRace: string;
   targetDate: string;
   targetDistance: string;
